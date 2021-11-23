@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
-import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav'
+import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav';
 import HomePage from './components/HomePage/HomePage';
-import ProductTable from './components/ProductTable/ProductTable'
-import SellProductTable from './components/SellProductTable/SellProductTable'
+import ProductTable from './components/ProductTable/ProductTable';
+import SellProductTable from './components/SellProductTable/SellProductTable';
+import LoginScreen from './components/LoginScreen/LoginScreen';
 
 class App extends Component {
   constructor(props) {
@@ -13,17 +14,18 @@ class App extends Component {
   }
   render() { 
     return (
-    <div>
-      <Router>
-        <HeaderAndNav />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductTable />} />
-          <Route path="/sellProducts" element={<SellProductTable />} />
-        </Routes>
-      </Router>
-      
-    </div>  );
+      <div>
+        <Router>
+          <HeaderAndNav />
+          <Routes>
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/products" element={<ProductTable />} />
+            <Route path="/sellProducts" element={<SellProductTable />} />
+          </Routes>
+        </Router>
+      </div>
+    );
   }
 }
  
