@@ -12,6 +12,7 @@ function HeaderAndNav(props) {
                 
                 <nav className='topNav'>
                 <Link to="/" >Home</Link>
+                <Link to="/login" >Log in Here</Link>
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
                 
