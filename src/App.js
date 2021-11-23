@@ -8,27 +8,28 @@ import SellProductTable from './components/SellProductTable/SellProductTable'
 import axios from 'axios'
 
 function App() {
-
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
 
   useEffect(() =>{
+    getProducts()
+  },[productList])
 
-  },[productId])
-
-  async function getProducts() {
+  const getProducts = async () => {
+    debugger
     let response = await axios.get('https://localhost:44394/api/Products')
-    setProductId(response.data.Name)
+    setProductList(response.data.Name)
+    console.log(response.data)
   }
 
-  render() 
+   
     return (
     <div>
       <Router>
         <HeaderAndNav />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductTable />} getProducts={getProducts}/>
+          <Route path="/products" element={<ProductTable />} productList={productList}/>
           <Route path="/sellProducts" element={<SellProductTable />} />
         </Routes>
       </Router>
