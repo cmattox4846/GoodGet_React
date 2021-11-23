@@ -1,9 +1,10 @@
-
+import React from 'react';
 import './App.css';
+import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav'
 
 function App() {
   return (
-    <h1>Good Get</h1>
+    <HeaderAndNav />
   );
 }
 
