@@ -11,7 +11,7 @@ function HeaderAndNav(props) {
             <div>
                 
                 <nav className='topNav'>
-                <Link to="/home" >Home</Link>
+                <Link to="/" >Home</Link>
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
                 
