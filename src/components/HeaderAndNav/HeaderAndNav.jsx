@@ -1,5 +1,6 @@
 import React from "react";
 import "./HeaderAndNav.css"
+import { Link } from 'react-router-dom'
 
 
 function HeaderAndNav(props) {
@@ -7,11 +8,15 @@ function HeaderAndNav(props) {
         <div>
             
             <h3>Welcome to Good Get</h3>
-            <div className="topnav">
-                <a href="#home" >Home</a>
-                <a href="#Products">Products</a>
-                <a href="#Login">Log in Here</a>
-                <a href="#logout" >Log out Here</a>
+            <div>
+                
+                <nav className='topNav'>
+                <Link to="/home" >Home</Link>
+                <Link to="/products">Products</Link>
+                <Link to="/sellProducts" >Sell Products</Link>
+                
+                </nav>
+                
             </div>
             
         </div>
