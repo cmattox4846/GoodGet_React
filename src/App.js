@@ -29,6 +29,7 @@ function App() {
 
   useEffect(() =>{
     getUserLogin();
+    getUserJWT();
   },[])
 
   useEffect(() =>{
