@@ -81,7 +81,7 @@ const getUserLogin = async () => {
         <Router>
           <HeaderAndNav />
           <Routes>
-            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/login" element={<LoginScreen loginUserCall = {loginUser} />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable productList={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
