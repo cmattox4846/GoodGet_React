@@ -9,15 +9,40 @@ import LoginScreen from './components/LoginScreen/LoginScreen';
 import axios from 'axios'
 import UserRegistration from './components/UserRegistration/UserRegistration';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import jwtDecode from 'jwt-decode'
 
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
   const [userData, setUserData] = useState({})
+  const [user, setUser] = useState("")
+  const [userLogin, setUserLogin] = useState([])
+
+  const getUserJWT = () => {
+    const jwt = localStorage.getItem('token');
+    try {
+      const user = jwtDecode(jwt);
+      setUser(user)
+      console.log(user)
+    } catch (error) {
+      console.log("Error in decoding JWT token: ", error)
+    }
+  }
+
+  useEffect(() =>{
+    getUserLogin();
+    getUserJWT();
+  },[])
 
   useEffect(() =>{
     getProducts()
   },[productList])
+// Get user login
+const getUserLogin = async () => {
+  const jwt = localStorage.getItem('token');
+  const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
+  setUserLogin(userLogin);
+}
 
   const getProducts = async () => {
     debugger
@@ -26,6 +51,15 @@ function App() {
     console.log(response.data)
   }
 
+  
+  
+  const loginUser = async (loginUser) => {
+    let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
+    localStorage.setItem('token', response.data.token);
+    console.log(response.data.token)
+    
+  }
+  
   const registerUser = async (objectBeingPassedIn) => {
 
     let newUser = {
