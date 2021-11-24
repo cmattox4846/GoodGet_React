@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import './App.css';
 import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav';
 import HomePage from './components/HomePage/HomePage';
@@ -17,21 +17,23 @@ function App() {
   const [userData, setUserData] = useState({})
   const [user, setUser] = useState("")
   const [userLogin, setUserLogin] = useState([])
+  const [jwt, setJwt] = useState()
 
   const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
     try {
       const user = jwtDecode(jwt);
       setUser(user)
-      console.log(user)
+      console.log("get user jwt call", user)
+      console.log(jwt)
     } catch (error) {
       console.log("Error in decoding JWT token: ", error)
     }
   }
 
   useEffect(() =>{
-    getUserLogin();
     getUserJWT();
+    getUserLogin();  
   },[])
 
   useEffect(() =>{
@@ -39,16 +41,16 @@ function App() {
   },[productList])
 // Get user login
 const getUserLogin = async () => {
-  const jwt = localStorage.getItem('token');
+  setJwt(localStorage.getItem('token'));
   const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
   setUserLogin(userLogin);
 }
 
   const getProducts = async () => {
-    debugger
-    let response = await axios.get('https://localhost:44394/api/Products')
+    const jwt = localStorage.getItem('token');
+    let response = await axios.get('https://localhost:44394/api/Products', { headers: {Authorization: 'Bearer ' + jwt}})
     setProductList(response.data.Name)
-    console.log(response.data)
+    console.log("Get Products response", response.data)
   }
 
   
@@ -56,7 +58,7 @@ const getUserLogin = async () => {
   const loginUser = async (loginUser) => {
     let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
     localStorage.setItem('token', response.data.token);
-    console.log(response.data.token)
+    console.log("response axios call", response.data.token)
     
   }
   
@@ -100,12 +102,19 @@ const getUserLogin = async () => {
         <Router>
           <HeaderAndNav />
           <Routes>
-            <Route path="/login" element={<LoginScreen loginUserCall = {loginUser} />} />
+            <Route path="/Profile" render={props =>{
+              if (!user){
+                return <Route path="/Profile" element= {<Navigate replace to="/login" />} />
+              } else {
+                return <ProfilePage {...props} user={user}/>
+              }
+            }} element={<ProfilePage userData={userData}/>}/>
+            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable productList={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
+            <Route path="/products" element={<ProductTable getProductsCall={getProducts}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
-            <Route path="/Profile" element={<ProfilePage userData={userData}/>}/>
+            
           </Routes>
         </Router>
       </div>
