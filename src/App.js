@@ -7,6 +7,7 @@ import ProductTable from './components/ProductTable/ProductTable';
 import SellProductTable from './components/SellProductTable/SellProductTable';
 import LoginScreen from './components/LoginScreen/LoginScreen';
 import axios from 'axios'
+import UserRegistration from './components/UserRegistration/UserRegistration';
 
 function App() {
   const [productId, setProductId] = useState([])
@@ -33,6 +34,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable productList={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
+            <Route path="/userRegistration" element={<UserRegistration />} />
           </Routes>
         </Router>
       </div>

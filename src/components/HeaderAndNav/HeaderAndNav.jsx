@@ -15,6 +15,7 @@ function HeaderAndNav(props) {
                 <Link to="/login" >Log in Here</Link>
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
+                <Link to="/userRegistration">User Registration</Link>
                 
                 </nav>
                 
