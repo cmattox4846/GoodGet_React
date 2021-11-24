@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
     "react-dom": "^17.0.2",
@@ -27,7 +28,7 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
+  "browsersList": {
     "production": [
       ">0.2%",
       "not dead",
@@ -39,4 +40,4 @@
       "last 1 safari version"
     ]
   }
-}
+}  
