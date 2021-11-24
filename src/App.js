@@ -14,8 +14,8 @@ import jwtDecode from 'jwt-decode'
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
-  const [userData, setUserData] = useState({})
-  const [user, setUser] = useState("")
+  // const [userData, setUserData] = useState({})
+  const [user, setUser] = useState({})
   const [userLogin, setUserLogin] = useState([])
   const [jwt, setJwt] = useState()
   const [loadData, setLoadData] = useState(false)
@@ -42,12 +42,14 @@ function App() {
     getProducts()
   },[loadData])
 
-// Get user login
-const getUserLogin = async () => {
-  setJwt(localStorage.getItem('token'));
-  const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
-  setUserLogin(userLogin);
-}
+ //Get user login
+ const getUserLogin = async () => {
+  
+   console.log(jwt)
+   const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
+   setUserLogin(response.data);
+   console.log(response.data)
+ }
 
   const getProducts = async () => {
     const jwt = localStorage.getItem('token');
@@ -61,7 +63,8 @@ const getUserLogin = async () => {
     let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
     localStorage.setItem('token', response.data.token);
     console.log("response axios call", response.data.token)
-    
+    setJwt(localStorage.getItem('token'));
+
   }
   
   const registerUser = async (objectBeingPassedIn) => {
@@ -78,24 +81,44 @@ const getUserLogin = async () => {
     await axios.post('https://localhost:44394/api/authentication', newUser)
   }
 
+  const sellProduct = async (objectBeingPassedIn) => {
+    let decimalPrice = parseInt(objectBeingPassedIn.price)
+    let newProduct = {
+        name: objectBeingPassedIn.name,
+        description: objectBeingPassedIn.description,
+        price: decimalPrice,
+    }
+    const jwt = localStorage.getItem('token')
+    console.log("Saved token: " + jwt)
+    try {
 
+      await axios.post('https://localhost:44394/api/Products/', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
+    }
+    catch (err) {
+      console.log("Erros with Product Post API call: ", err)
+    }
+
+  }
+  
+  
 
     return (
       <div>
         <Router>
           <HeaderAndNav />
           <Routes>
-            <Route path="/Profile" render={props =>{
+            {/* <Route path="/Profile" render={props =>{
               if (!user){
                 return <Route path="/Profile" element= {<Navigate replace to="/login" />} />
               } else {
                 return <ProfilePage {...props} user={user}/>
               }
-            }} element={<ProfilePage userData={userData}/>}/>
+            }} /> */}
+            <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />
-            <Route path="/sellProducts" element={<SellProductTable />} />
+            <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />            
+            <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             
           </Routes>
