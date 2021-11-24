@@ -90,7 +90,7 @@ const getUserLogin = async () => {
                 return <ProfilePage {...props} user={user}/>
               }
             }} element={<ProfilePage userData={userData}/>}/>
-            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />
+            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable getProductsCall={getProducts}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
