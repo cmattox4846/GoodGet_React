@@ -1,40 +1,53 @@
-import React from "react";
-import axios from "axios";
+import React, { Component} from "react";
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button";
 
 
-function LoginScreen(){
-    return ( 
-        <div>
-        <h1>hello</h1>
-        <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>User Name</Form.Label>
-              <Form.Control type="userName" placeholder="Enter UserName" />
-              
-            </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
+class LoginScreen extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            userName:'',            
+            password:''
+        }
+    }
+    
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-        </Form>
-        </div>
-        
-    );
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSubmit = async (event) => {
+        event.preventDefault();             
+        this.props.loginUserCall(this.state)
+    }
+
+    render(){
+        return ( 
+            <div>
+                <Form onSubmit= {this.handleSubmit} method= 'post'>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>User Name</Form.Label>
+                      <Form.Control type="text" name="userName" placeholder="Enter UserName" value= {this.state.userName} onChange= {this.handleChange} />
+
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control type="password" name="password" placeholder="Password" value= {this.state.password} onChange= {this.handleChange}/>
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                </Form>
+            </div>
+
+        );
+    }
 }
  
 export default LoginScreen;
