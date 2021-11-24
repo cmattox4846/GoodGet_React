@@ -18,6 +18,7 @@ function App() {
   const [user, setUser] = useState("")
   const [userLogin, setUserLogin] = useState([])
   const [jwt, setJwt] = useState()
+  const [loadData, setLoadData] = useState(false)
 
   const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
@@ -33,12 +34,14 @@ function App() {
 
   useEffect(() =>{
     getUserJWT();
-    getUserLogin();  
+    getUserLogin();
+    setLoadData(!loadData)   
   },[])
 
   useEffect(() =>{
     getProducts()
-  },[productList])
+  },[loadData])
+
 // Get user login
 const getUserLogin = async () => {
   setJwt(localStorage.getItem('token'));
@@ -49,8 +52,7 @@ const getUserLogin = async () => {
   const getProducts = async () => {
     const jwt = localStorage.getItem('token');
     let response = await axios.get('https://localhost:44394/api/Products', { headers: {Authorization: 'Bearer ' + jwt}})
-    setProductList(response.data.Name)
-    console.log("Get Products response", response.data)
+    setProductList(response.data)  
   }
 
   
@@ -92,7 +94,7 @@ const getUserLogin = async () => {
             }} element={<ProfilePage userData={userData}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable getProductsCall={getProducts}/>} />
+            <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             

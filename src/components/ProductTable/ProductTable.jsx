@@ -1,36 +1,27 @@
 import React from "react";
+import Table from 'react-bootstrap/Table'
 
 const ProductTable = (props) => {
-
-  <React.Fragment>
-    <div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <div>
-        {props.productList.map(function(product){
+    return (
+        props.listOfProducts.map(function(product){
           return (
-            <div onClick={() => props.getProducts()}>
-              <tr>
-                <td>{product.id}</td>
-                <td>{product.Name}</td>
-                <td>{product.Description}</td>
-                <td>{product.Price}</td>
-              </tr>
+              <div key={product.id}>
+                <Table>                    
+                    <tbody>
+                        <tr>
+                             <td>{product.id}</td>
+                             <td>{product.name}</td>
+                             <td>{product.description}</td>
+                             <td>{product.price}</td>
+                        </tr>
+                    </tbody>    
+                </Table>
             </div>
             )
           }
-        )}
-      </div>
-      </table>
-    </div>
-  </React.Fragment>
+        )
+    )
+  
 }
  
 export default ProductTable;
