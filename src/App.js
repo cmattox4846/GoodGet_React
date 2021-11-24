@@ -11,7 +11,6 @@ import LoginScreen from './components/LoginScreen/LoginScreen';
 import axios from 'axios'
 
 function App() {
-
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
   const [user, setUser] = useState("")
@@ -43,10 +42,13 @@ function App() {
     setUserLogin(userLogin);
   }
 
-  // Get Product info on id change
-  async function getProducts() {
+  // Get Product info on id change 
+
+  const getProducts = async () => {
+    debugger
     let response = await axios.get('https://localhost:44394/api/Products')
-    setProductId(response.data.Name)
+    setProductList(response.data.Name)
+    console.log(response.data)
   }
 
   // * CAll back functions
@@ -56,6 +58,23 @@ function App() {
     console.log(response.data.token)
     
   }
+  registerUser = async (objectBeingPassedIn) => {
+
+    let newUser = {
+        firstName: objectBeingPassedIn.firstName,
+        lastName: objectBeingPassedIn.lastName,
+        password: objectBeingPassedIn.password,
+        userName: objectBeingPassedIn.userName,
+        email: objectBeingPassedIn.email,
+        phoneNumber: objectBeingPassedIn.phoneNumber 
+    }
+
+    await axios.post('https://localhost:44394/api/authentication', newUser)
+
+
+
+
+
   
     return (
       <div>
@@ -63,8 +82,8 @@ function App() {
           <HeaderAndNav />
           <Routes>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser} />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable />} />           
+            <Route path="/" element={<HomePage />} />                    
+            <Route path="/products" element={<ProductTable productList={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
           </Routes>
         </Router>
@@ -72,6 +91,6 @@ function App() {
   );
 }
 
-
+}
 export default App
 ;
