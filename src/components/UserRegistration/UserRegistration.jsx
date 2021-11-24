@@ -4,7 +4,6 @@ class UserRegistration extends Component {
     constructor(props){
         super(props)
             this.state = {
-                id: '',
                 firstName: '',
                 lastName: '',
                 userName: '',
@@ -30,17 +29,17 @@ class UserRegistration extends Component {
             <div className="formCreate">
                 <form onSubmit={this.handleSubmit}>
                     <label>First Name:</label>
-                    <input type="text" name='first_name' onChange={this.handleChange} value={this.state.firstName}/>
+                    <input type="text" name='firstName' onChange={this.handleChange} value={this.state.firstName}/>
                     <label>Last Name:</label>
-                    <input type="text" name='last_name' onChange={this.handleChange} value={this.state.lastName}/>
+                    <input type="text" name='lastName' onChange={this.handleChange} value={this.state.lastName}/>
                     <label>Username:</label>
-                    <input type="text" name='username' onChange={this.handleChange} value={this.state.userName}/>
+                    <input type="text" name='userName' onChange={this.handleChange} value={this.state.userName}/>
                     <label>Email:</label>
                     <input type="text" name='email' onChange={this.handleChange} value={this.state.email}/>
                     <label>Password:</label>
                     <input type="text" name='password' onChange={this.handleChange} value={this.state.password}/>
                     <label>PhoneNumber:</label>
-                    <input type="text" name='phone_number' onChange={this.handleChange} value={this.state.phoneNumber}/>
+                    <input type="text" name='phoneNumber' onChange={this.handleChange} value={this.state.phoneNumber}/>
                     <button className="button" type="submit">Create User</button>
                 </form>
             </div>

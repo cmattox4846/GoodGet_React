@@ -8,10 +8,12 @@ import SellProductTable from './components/SellProductTable/SellProductTable';
 import LoginScreen from './components/LoginScreen/LoginScreen';
 import axios from 'axios'
 import UserRegistration from './components/UserRegistration/UserRegistration';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
+  const [userData, setUserData] = useState({})
 
   useEffect(() =>{
     getProducts()
@@ -24,10 +26,10 @@ function App() {
     console.log(response.data)
   }
 
-  registerUser = async (objectBeingPassedIn) => {
+  const registerUser = async (objectBeingPassedIn) => {
 
     let newUser = {
-        fiirstName: objectBeingPassedIn.firstName,
+        firstName: objectBeingPassedIn.firstName,
         lastName: objectBeingPassedIn.lastName,
         password: objectBeingPassedIn.password,
         userName: objectBeingPassedIn.userName,
@@ -36,12 +38,10 @@ function App() {
     }
 
     await axios.post('https://localhost:44394/api/authentication', newUser)
+  }
 
 
 
-
-
-  
     return (
       <div>
         <Router>
@@ -51,7 +51,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable productList={productList}/>} />
             <Route path="/sellProducts" element={<SellProductTable />} />
-            <Route path="/userRegistration" element={<UserRegistration />} />
+            <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
+            <Route path="/Profile" element={<ProfilePage userData={userData}/>}/>
           </Routes>
         </Router>
       </div>
@@ -59,5 +60,4 @@ function App() {
 }
 
 
-export default App
-;
+export default App;
