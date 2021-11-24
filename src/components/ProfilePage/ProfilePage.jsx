@@ -5,19 +5,19 @@ import Table from "react-bootstrap/Table";
 const ProfilePage = (props) => {
     return (  
         <React.Fragment>
-            <div className="music_table">
+            <div className="Profile_Table">
                 <form>
                     <div className="table">
                         <Table>
                             <tbody>
                                 <tr>
-                                    <td>First Name: {props.userData.firstName}</td>
-                                    <td>Last Name: {props.lastName}</td>
-                                    <td>Username: {props.userName}</td>
-                                    <td>Email: {props.email}</td>
-                                    <td>Phone Number: {props.phoneNumber}</td>                                    
+                                    <td>First Name: {props.user.firstname}</td>
+                                    <td>Last Name: {props.user.lastname}</td>
+                                    <td>Username: {props.user.username}</td>
+                                    <td>Email: {props.user.email}</td>
+                                    <td>Phone Number: {props.user.phonenumber}</td> 
+                                    <td><Button variant="primary" onClick={() => props.edit()}>Update Profile</Button></td>                                   
                                 </tr>
-                                <Button variant="primary" onClick={() => props.edit(props.id)}>Update Profile</Button>
                             </tbody>
                         </Table>
                     </div>

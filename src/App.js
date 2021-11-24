@@ -14,9 +14,9 @@ import jwtDecode from 'jwt-decode'
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
-  const [userData, setUserData] = useState({})
-  const [user, setUser] = useState("")
-  const [userLogin, setUserLogin] = useState([])
+  // const [userData, setUserData] = useState({})
+  const [user, setUser] = useState({})
+  // const [userLogin, setUserLogin] = useState([])
   const [jwt, setJwt] = useState()
 
   const getUserJWT = () => {
@@ -33,18 +33,20 @@ function App() {
 
   useEffect(() =>{
     getUserJWT();
-    getUserLogin();  
-  },[])
+    // getUserLogin();  
+  },[jwt])
 
   useEffect(() =>{
     getProducts()
   },[productList])
 // Get user login
-const getUserLogin = async () => {
-  setJwt(localStorage.getItem('token'));
-  const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
-  setUserLogin(userLogin);
-}
+// const getUserLogin = async () => {
+//   debugger
+//   console.log(jwt)
+//   const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
+//   setUserLogin(response.data);
+//   console.log(response.data)
+// }
 
   const getProducts = async () => {
     const jwt = localStorage.getItem('token');
@@ -59,7 +61,8 @@ const getUserLogin = async () => {
     let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
     localStorage.setItem('token', response.data.token);
     console.log("response axios call", response.data.token)
-    
+    setJwt(localStorage.getItem('token'));
+
   }
   
   const registerUser = async (objectBeingPassedIn) => {
@@ -102,13 +105,14 @@ const getUserLogin = async () => {
         <Router>
           <HeaderAndNav />
           <Routes>
-            <Route path="/Profile" render={props =>{
+            {/* <Route path="/Profile" render={props =>{
               if (!user){
                 return <Route path="/Profile" element= {<Navigate replace to="/login" />} />
               } else {
                 return <ProfilePage {...props} user={user}/>
               }
-            }} element={<ProfilePage userData={userData}/>}/>
+            }} /> */}
+            <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
