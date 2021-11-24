@@ -24,6 +24,23 @@ function App() {
     console.log(response.data)
   }
 
+  registerUser = async (objectBeingPassedIn) => {
+
+    let newUser = {
+        fiirstName: objectBeingPassedIn.firstName,
+        lastName: objectBeingPassedIn.lastName,
+        password: objectBeingPassedIn.password,
+        userName: objectBeingPassedIn.userName,
+        email: objectBeingPassedIn.email,
+        phoneNumber: objectBeingPassedIn.phoneNumber 
+    }
+
+    await axios.post('https://localhost:44394/api/authentication', newUser)
+
+
+
+
+
   
     return (
       <div>
