@@ -74,7 +74,26 @@ const getUserLogin = async () => {
     await axios.post('https://localhost:44394/api/authentication', newUser)
   }
 
+  const sellProduct = async (objectBeingPassedIn) => {
+    let decimalPrice = parseInt(objectBeingPassedIn.price)
+    let newProduct = {
+        name: objectBeingPassedIn.name,
+        description: objectBeingPassedIn.description,
+        price: decimalPrice,
+    }
+    const jwt = localStorage.getItem('token')
+    console.log("Saved token: " + jwt)
+    try {
 
+      await axios.post('https://localhost:44394/api/Products/', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
+    }
+    catch (err) {
+      console.log("Erros with Product Post API call: ", err)
+    }
+
+  }
+  
+  
 
     return (
       <div>
@@ -84,7 +103,7 @@ const getUserLogin = async () => {
             <Route path="/login" element={<LoginScreen loginUserCall = {loginUser} />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable productList={productList}/>} />
-            <Route path="/sellProducts" element={<SellProductTable />} />
+            <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/Profile" element={<ProfilePage userData={userData}/>}/>
           </Routes>
