@@ -12,6 +12,8 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
+
+
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
@@ -105,6 +107,12 @@ function App() {
     }
 
   }
+
+  const searchForProduct = async (productName) => {
+    const jwt = localStorage.getItem('token')
+    let response = await axios.get('https://localhost:44394/api/Products', {headers:{Authorization:'Bearer ' + jwt}})
+    setShoppingCart(response.data)
+  }
   
   const getShoppingCart = async () => {
     try {
@@ -118,9 +126,14 @@ function App() {
     }
   }
 
-  const addToShoppingCart = async () => {
-    const jwt = localStorage.getItem('token');
-    let response = await axios.post('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+  const addToShoppingCart = async (addItem) => {
+    console.log(addItem)
+    let newProduct = {
+      Userid: user.id,
+      ProductId: addItem.id,
+      Quantity: 1}
+    const jwt = localStorage.getItem('token')
+    let response = await axios.post('https://localhost:44394/api/ShoppingCart', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
     setLoadShoppingCart(!loadShoppingCart)
   }
 
@@ -145,7 +158,7 @@ function App() {
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart}/>} />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} /> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />

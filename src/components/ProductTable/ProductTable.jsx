@@ -22,7 +22,7 @@ const ProductTable = (props) => {
                 <td>{product.name}</td>
                 <td>{product.description}</td>
                 <td>{product.price}</td>
-              </tr>              
+                <td><button onClick={() => props.add(product)}>Add Product</button></td></tr>
             );
           })}
         </tbody>
