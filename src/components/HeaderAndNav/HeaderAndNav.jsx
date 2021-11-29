@@ -44,6 +44,7 @@ class HeaderAndNav extends Component{
                 <Link to="/sellProducts" >Sell Products</Link>
                 <Link to="/userRegistration">User Registration</Link>
                 <Link to="/Profile">Profile</Link>
+                <Link to="/ShoppingCart">Shopping Cart</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
                      <Form.Control
@@ -60,6 +61,7 @@ class HeaderAndNav extends Component{
                     </Button>
                     </Form.Group>
                 </Form>
+                
                 
                 </nav>
                 

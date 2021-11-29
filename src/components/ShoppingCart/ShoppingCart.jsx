@@ -1,37 +1,36 @@
 import React from "react";
+import Table from 'react-bootstrap/Table'
+
 
 const ShoppingCart = (props) => {
-
-  <React.Fragment>
+return(
     <div>
-    <table>
+    <Table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Quantity</th>
             </tr>
         </thead>
-        <div>
-        {props.list.map(function(cartItem){
+        <tbody>
+        {props.list.map((cartItem) => {
           return (
-            <div>
-              <tr>
-                <td>{cartItem.Name}</td>
-                <td>{cartItem.Description}</td>
-                <td>{cartItem.Price}</td>
-                <td>{cartItem.Quantity}</td>
-                <button onClick={() => props.delete(cartItem.Id)}>Remove item</button>
+              <tr key={cartItem.id}>
+                <td>{cartItem.product.name}</td>
+                <td>{cartItem.product.description}</td>
+                <td>{cartItem.product.price}</td>
+                <td>{cartItem.quantity}</td>
+                <td><button onClick={() => props.delete(cartItem.productId)}>Remove item</button></td>
               </tr>
-            </div>
             )
           }
         )}
-      </div>
-      </table>
+        </tbody>
+      </Table>
     </div>
-  </React.Fragment>
+  )
 }
  
 export default ShoppingCart;
