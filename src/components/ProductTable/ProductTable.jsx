@@ -12,7 +12,7 @@ const ProductTable = (props) => {
                              <td>{product.id}</td>
                              <td>{product.name}</td>
                              <td>{product.description}</td>
-                             <td>{product.price}</td>
+                             <td>{product.price}</td><button onClick={() => props.add(product.Id)}>Add to Cart</button>
                         </tr>
                     </tbody>    
                 </Table>
