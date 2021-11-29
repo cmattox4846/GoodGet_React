@@ -15,7 +15,7 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 function App() {
   const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
-  // const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({})
   const [user, setUser] = useState({})
   const [userLogin, setUserLogin] = useState([])
   const [jwt, setJwt] = useState()
@@ -145,7 +145,7 @@ function App() {
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart}/>} />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
