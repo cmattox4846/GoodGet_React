@@ -75,6 +75,10 @@ function App() {
     setJwt(localStorage.getItem('token'));
 
   }
+
+  const logoutUser=()=>{
+    
+  }
   
   const registerUser = async (objectBeingPassedIn) => {
 
