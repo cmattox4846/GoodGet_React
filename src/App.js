@@ -11,6 +11,7 @@ import UserRegistration from './components/UserRegistration/UserRegistration';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import ProductDetails from './components/ProductTable/ProductTable';
 
 
 
@@ -136,6 +137,16 @@ function App() {
     let response = await axios.post('https://localhost:44394/api/ShoppingCart', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
     setLoadShoppingCart(!loadShoppingCart)
   }
+  
+  const seeProductDetails = async (viewDetails) => {
+    console.log(viewDetails)
+    let newProduct = {
+      ProductId: viewDetails.id,
+      Quantity: 1}
+    const jwt = localStorage.getItem('token')
+    let response = await axios.post('https://localhost:44394/api/Products', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
+    setProductList()
+  }
 
   const deleteShoppingCart = async (item) => {
     const jwt = localStorage.getItem('token');
@@ -158,7 +169,7 @@ function App() {
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} /> }  />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} view={seeProductDetails} /> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
