@@ -52,7 +52,6 @@ function App() {
  //Get user login
  const getUserLogin = async () => {
   
-   console.log(jwt)
    const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
    setUserLogin(response.data);
    console.log(response.data)
@@ -108,17 +107,26 @@ function App() {
   }
   
   const getShoppingCart = async () => {
-    let response = await axios.get('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
-    setShoppingCart(response.data)
+    try {
+      const jwt = localStorage.getItem('token');
+      let response = await axios.get('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+      console.log(response.data)
+      setShoppingCart(response.data)
+    }
+    catch (err){
+      console.log("Errors with shopping cart", err)
+    }
   }
 
   const addToShoppingCart = async () => {
+    const jwt = localStorage.getItem('token');
     let response = await axios.post('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
     setLoadShoppingCart(!loadShoppingCart)
   }
 
-  const deleteShoppingCart = async () => {
-    let response = await axios.delete('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+  const deleteShoppingCart = async (item) => {
+    const jwt = localStorage.getItem('token');
+    let response = await axios.delete(`https://localhost:44394/api/ShoppingCart/${item}`, {headers:{Authorization:'Bearer ' + jwt}})
     setLoadShoppingCart(!loadShoppingCart)
   }
 
@@ -140,7 +148,7 @@ function App() {
             <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
-            <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart}/>} />
+            <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
           </Routes>
         </Router>
       </div>

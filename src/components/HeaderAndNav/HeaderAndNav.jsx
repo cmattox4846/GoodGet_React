@@ -17,7 +17,7 @@ function HeaderAndNav(props) {
                 <Link to="/sellProducts" >Sell Products</Link>
                 <Link to="/userRegistration">User Registration</Link>
                 <Link to="/Profile">Profile</Link>
-                
+                <Link to="/ShoppingCart">Shopping Cart</Link>
                 </nav>
                 
             </div>
