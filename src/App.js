@@ -10,6 +10,7 @@ import axios from 'axios'
 import UserRegistration from './components/UserRegistration/UserRegistration';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
+import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 function App() {
   const [productId, setProductId] = useState([])
@@ -19,6 +20,8 @@ function App() {
   const [userLogin, setUserLogin] = useState([])
   const [jwt, setJwt] = useState()
   const [loadData, setLoadData] = useState(false)
+  const [shoppingCart, setShoppingCart] = useState([])
+  const [loadShoppingCart, setLoadShoppingCart] = useState(false)
 
   const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
@@ -41,6 +44,10 @@ function App() {
   useEffect(() =>{
     getProducts()
   },[loadData])
+
+  useEffect(() => {
+    getShoppingCart()
+  },[loadShoppingCart])
 
  //Get user login
  const getUserLogin = async () => {
@@ -100,7 +107,20 @@ function App() {
 
   }
   
-  
+  const getShoppingCart = async () => {
+    let response = await axios.get('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+    setShoppingCart(response.data)
+  }
+
+  const addToShoppingCart = async () => {
+    let response = await axios.post('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+    setLoadShoppingCart(!loadShoppingCart)
+  }
+
+  const deleteShoppingCart = async () => {
+    let response = await axios.delete('https://localhost:44394/api/ShoppingCart', {headers:{Authorization:'Bearer ' + jwt}})
+    setLoadShoppingCart(!loadShoppingCart)
+  }
 
     return (
       <div>
@@ -120,7 +140,7 @@ function App() {
             <Route path="/products" element={<ProductTable listOfProducts={productList}/>} />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
-            
+            <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart}/>} />
           </Routes>
         </Router>
       </div>

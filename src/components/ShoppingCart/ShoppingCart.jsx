@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductTable = (props) => {
+const ShoppingCart = (props) => {
 
   <React.Fragment>
     <div>
@@ -14,14 +14,15 @@ const ProductTable = (props) => {
             </tr>
         </thead>
         <div>
-        {props.productList.map(function(product){
+        {props.list.map(function(cartItem){
           return (
-            <div onClick={() => props.getProducts()}>
+            <div>
               <tr>
-                <td>{product.id}</td>
-                <td>{product.Name}</td>
-                <td>{product.Description}</td>
-                <td>{product.Price}</td>
+                <td>{cartItem.Name}</td>
+                <td>{cartItem.Description}</td>
+                <td>{cartItem.Price}</td>
+                <td>{cartItem.Quantity}</td>
+                <button onClick={() => props.delete(cartItem.Id)}>Remove item</button>
               </tr>
             </div>
             )
@@ -33,4 +34,4 @@ const ProductTable = (props) => {
   </React.Fragment>
 }
  
-export default ProductTable;
+export default ShoppingCart;
