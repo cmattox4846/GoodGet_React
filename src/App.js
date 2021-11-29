@@ -102,7 +102,7 @@ function App() {
       await axios.post('https://localhost:44394/api/Products/', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
     }
     catch (err) {
-      console.log("Erros with Product Post API call: ", err)
+      console.log("Errors with Product Post API call: ", err)
     }
 
   }
