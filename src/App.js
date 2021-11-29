@@ -12,6 +12,7 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import ProductDetails from './components/ProductTable/ProductTable';
+import DetailTable from './components/TestPage/TestPage';
 
 
 
@@ -25,6 +26,10 @@ function App() {
   const [loadData, setLoadData] = useState(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [loadShoppingCart, setLoadShoppingCart] = useState(false)
+  const [details, setDetails] = useState([])
+  // const [detailsLoad, setDetailsLoad] = useState("")
+
+
 
   const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
@@ -51,6 +56,10 @@ function App() {
   useEffect(() => {
     getShoppingCart()
   },[loadShoppingCart])
+
+useEffect(() =>{
+  
+}, [details])
 
  //Get user login
  const getUserLogin = async () => {
@@ -142,14 +151,14 @@ function App() {
     setLoadShoppingCart(!loadShoppingCart)
   }
   
-  const seeProductDetails = async (viewDetails) => {
-    console.log(viewDetails)
-    let newProduct = {
-      ProductId: viewDetails.id,
-      Quantity: 1}
-    const jwt = localStorage.getItem('token')
-    let response = await axios.post('https://localhost:44394/api/Products', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
-    setProductList()
+  const seeProductDetails = (viewDetails) =>  {
+    console.log("these are the details" + viewDetails)
+    let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id == viewDetails)
+    console.log(deets)
+    setDetails(deets)
+    console.log(details)
+    
+   
   }
 
   const deleteShoppingCart = async (item) => {
@@ -173,10 +182,11 @@ function App() {
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} view={seeProductDetails} /> }  />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} view={seeProductDetails} details={details} /> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
+            <Route path="/TestPage" element={<DetailTable details={details} /> } />
           </Routes>
         </Router>
       </div>

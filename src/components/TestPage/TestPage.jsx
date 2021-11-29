@@ -24,34 +24,10 @@ import Table from "react-bootstrap/Table";
 // export default ProductDetails
 
 
-const ProductTable = (props) => {
+const DetailTable = (props) => {
   return (
     <div>
-      <Table>
-        <thead>
-            <tr>
-                <td>Product ID</td>
-                <td>Name</td>
-                <td>Description</td>
-                <td>Price</td>
-
-            </tr>
-        </thead>
-        <tbody>
-          {props.listOfProducts.map((product) => {
-            return (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{product.price}</td>
-                <td><button onClick={() => props.add(product)}>Add Product</button>
-                <td><button onClick={() => props.view(product.id)}>See Product Details</button></td></td></tr>
-                
-            );
-          })}
-        </tbody>
-      </Table>
+  
       
           <Table>
             <tbody>
@@ -65,4 +41,4 @@ const ProductTable = (props) => {
   );
 };
 
-export default ProductTable;
+export default DetailTable;

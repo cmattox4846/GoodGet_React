@@ -45,6 +45,7 @@ class HeaderAndNav extends Component{
                 <Link to="/userRegistration">User Registration</Link>
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
+                <Link to="/TestPage">Details</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
                      <Form.Control
