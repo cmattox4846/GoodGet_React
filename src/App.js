@@ -80,8 +80,9 @@ function App() {
   const logOut = ()=>{
     localStorage.removeItem("token");
     setUser({})
+    console.log("logged user out")
   }
-  
+  //register user
   const registerUser = async (objectBeingPassedIn) => {
 
     let newUser = {
@@ -95,7 +96,7 @@ function App() {
 
     await axios.post('https://localhost:44394/api/authentication', newUser)
   }
-
+  // get all products
   const getProducts = async () => {
     const jwt = localStorage.getItem('token');
     let response = await axios.get('https://localhost:44394/api/Products', { headers: {Authorization: 'Bearer ' + jwt}})
@@ -121,6 +122,7 @@ function App() {
   }
 
   const searchForProduct = async (productName) => {
+    console.log("api call for product search", productName)
     const jwt = localStorage.getItem('token')
     let response = await axios.get('https://localhost:44394/api/Products/' + (productName) + '/' , {headers:{Authorization:'Bearer ' + jwt}})
     console.log(response.data)

@@ -11,7 +11,8 @@ const LoginScreen = (props) => {
     
     let navigate= useNavigate();
 
-    async function Register() {                   
+    async function Register() { 
+        console.log("from login" + formValues)                  
         props.loginUserCall(formValues)
         navigate("../Profile")
     }
