@@ -19,18 +19,32 @@ const DetailTable = (props) => {
   }
   
 
-  return (      
+  return (
     <div>
-
-      
+      <Table>
+            <tbody>
+            <tr><td>Product Name: {props.details.name}</td></tr>
+            <tr><td>Description: {props.details.description}</td></tr>
+            <tr><td>Price: {props.details.price}</td></tr>
+            <tr><td>Rating: {props.productReviews.rating} </td></tr>
+            <tr><td>Customer Reviews: {props.productReviews.review}</td></tr>
+            
+            </tbody>    
+          </Table>
+        <h4>Review Products Here</h4>
       <Form onSubmit= {handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Review</Form.Label>
-            <Form.Control type="review" name="review" placeholder="Write Review Here" onChange= {handleChange} required= {true}/>
+        <Form.Group className="mb-3" controlId="formBasicEmail">          
+          <Form.Control type="review" name="review" placeholder="Write Review Here" onChange= {handleChange} required= {true}/>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name="password" placeholder="Password" onChange= {handleChange} required= {true}/>
+        <Form.Group className="mb-3" controlId="formBasicPassword">  
+        <Form.Select aria-label="Default select example">
+            <option>Rate Product Here</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            <option value="4">Four</option>
+            <option value="5">Five</option>
+        </Form.Select>
         </Form.Group>
         
         <Button variant="primary" type="submit" >

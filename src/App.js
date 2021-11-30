@@ -155,9 +155,9 @@ function App() {
   
   const seeProductDetails = (viewDetails) =>  {
     console.log("these are the details" + viewDetails)
-    let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id === viewDetails)
-    console.log(deets)
-    setDetails(deets[0])
+    let details = productList.filter((detailsOfProducts) => detailsOfProducts.id === viewDetails)
+    console.log(details)
+    setDetails(details[0])
     // console.log(details)
     
    
@@ -208,7 +208,7 @@ const addReviews = async (addItem) => {
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
-            <Route path="/ProductDetail" element={<DetailTable details={details} reviews={getReviews} addProductReview={addReviews} /> } />
+            <Route path="/ProductDetail" element={<DetailTable details={details} productReviews={reviews} addProductReview={addReviews} /> } />
           </Routes>
         </Router>        
       </div>

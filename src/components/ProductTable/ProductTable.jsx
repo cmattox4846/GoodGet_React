@@ -36,10 +36,6 @@ const ProductTable = (props) => {
           })}
         </tbody>
       </Table>
-      
-      
-          
-      
     </div>
   );
 };
