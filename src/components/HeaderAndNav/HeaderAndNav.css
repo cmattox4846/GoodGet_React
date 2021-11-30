@@ -25,3 +25,7 @@
     background-color: #04AA6D;
     color: white;
   }
+
+  .logo {
+    background-image: url("../../Images/logo.jpg")
+  }
