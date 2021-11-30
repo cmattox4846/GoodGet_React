@@ -3,7 +3,6 @@ import Table from "react-bootstrap/Table";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import useForm from "../LoginScreen/useForm";
-import StarRating from 'react-bootstrap-star-rating';
 
 
 const DetailTable = (props) => {

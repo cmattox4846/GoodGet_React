@@ -1,14 +1,14 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 import { Link } from 'react-router-dom';
-
+import "./ProductTable.css"
 
 
 
 
 const ProductTable = (props) => {
   return (
-    <div>
+    <div className="productTable">
       <button onClick={() => props.getAllProducts()}> View All Products </button>
       <Table>
         <thead>
@@ -36,10 +36,6 @@ const ProductTable = (props) => {
           })}
         </tbody>
       </Table>
-      
-      
-          
-      
     </div>
   );
 };
