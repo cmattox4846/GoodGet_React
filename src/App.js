@@ -76,7 +76,7 @@ function App() {
   }
 
   const logoutUser=()=>{
-    
+    localStorage.removeItem('token')
   }
   
   const registerUser = async (objectBeingPassedIn) => {
@@ -160,7 +160,7 @@ function App() {
               }
             }} /> */}
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
-            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
+            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}  logoutUser={logoutUser}/>} />        
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} /> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />

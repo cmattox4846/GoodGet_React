@@ -26,6 +26,11 @@ class HeaderAndNav extends Component{
         this.props.loginUserCall(this.state)
     }
 
+    handleLogout = async (event) => {
+        event.preventDefault();             
+        this.props.loginoutUser()
+    }
+
 
 
 
@@ -39,12 +44,14 @@ class HeaderAndNav extends Component{
                 
                 <nav className='topNav'>
                 <Link to="/" >Home</Link>
-                <Link to="/login" >Log in Here</Link>
+                
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
                 <Link to="/userRegistration">User Registration</Link>
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
+                <Link to="/login" >Login Here</Link>
+                <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
                      <Form.Control
@@ -53,8 +60,6 @@ class HeaderAndNav extends Component{
                      placeholder="Search for Product"
                      value={this.state.searchTerm}
                      onChange={this.handleChange}/>                  
-
-                  
 
                     <Button variant="primary" type="submit">
                       Search
