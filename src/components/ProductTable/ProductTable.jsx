@@ -1,30 +1,12 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 
 
 
 
-// const ProductDetails = (product) => {
-//     return (
-//         <div>
-//             <Table>
-//                 <tbody>
-//                 <tr>
-//                 <td>{product.id}</td>
-//                 <td>{product.name}</td>
-//                 <td>{product.description}</td>
-//                 <td>{product.price}</td>
-//                 <td>{product.review}</td>
-//                 <td><button onClick={() => add(product)}>Add Product</button></td></tr>
-//                 </tbody>
-//             </Table>
-//         </div>
-//     )
-// }
-// export default ProductDetails
 
-
-const ProductTable = (props) => {
+  
   return (
     <div>
       <Table>

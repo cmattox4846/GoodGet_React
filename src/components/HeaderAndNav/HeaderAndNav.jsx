@@ -10,7 +10,8 @@ class HeaderAndNav extends Component{
     constructor(props){
         super(props)
         this.state = {
-            searchTerm:''          
+            searchTerm:'' ,
+            logout:''         
             
         }
     }
@@ -27,8 +28,8 @@ class HeaderAndNav extends Component{
     }
 
     handleLogout = async (event) => {
-        event.preventDefault();             
-        this.props.loginoutUser()
+                 
+       this.props.logout()
     }
 
 
@@ -51,7 +52,7 @@ class HeaderAndNav extends Component{
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
                 <Link to="/login" >Login Here</Link>
-                {/* <Link to="/login" onClick={localStorage.removeItem('token')}>Logout Here</Link> */}
+                <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
                 <Link to="/Detail">Details</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
