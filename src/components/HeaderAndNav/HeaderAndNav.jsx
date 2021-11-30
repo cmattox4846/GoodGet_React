@@ -3,40 +3,48 @@ import "./HeaderAndNav.css"
 import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { useNavigate } from "react-router";
-import useForm from "../LoginScreen/useForm";
 
 
-const HeaderAndNav = (props) =>{
-    const {formValues, handleChange, handleSubmit } = useForm(searchForProducts);
-    
-    let navigate= useNavigate();
 
-    async function searchForProducts() { 
-        console.log(formValues)                  
-        props.productSearch(formValues.searchTerm)
-        navigate("../products")
+class HeaderAndNav extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            searchTerm:'' ,
+            logout:''         
+            
+        }
     }
 
-    
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSubmit = async (event) => {
+        event.preventDefault();             
+        this.props.productSearch(this.state.searchTerm)
+    }
+
+    handleLogout = async (event) => {
+                 
+       this.props.logout()
+    }
+
+
+
+
+
+    render(){
     return(
-<<<<<<< Updated upstream
-        <div>            
-            <h3>Welcome to Good Get</h3>
-            <div>                
-                <nav className='topNav'>
-                <Link to="/" >Home</Link>                
-                <Link to="/products">Products</Link>
-                <Link to="/sellProducts" >Sell Products</Link>
-=======
         <div>
             
-            <h2></h2>
+            
             <div>
                 
                 <nav className='topNav'>
                 <Link to="/" >Home</Link>
->>>>>>> Stashed changes
                 <Link to="/userRegistration">User Registration</Link>
                 
                 <Link to="/login" >Login Here</Link>
@@ -45,36 +53,35 @@ const HeaderAndNav = (props) =>{
                 
                 
                 <Link to="/ShoppingCart">Shopping Cart</Link>
-<<<<<<< Updated upstream
-                <Link to="/login" >Login Here</Link>
-                <Link to="/" onClick={() =>{props.logout() }}>Logout Here</Link>                
-                <Form onSubmit= {handleSubmit}>
-=======
                 <Link to="/sellProducts" >Sell Products</Link>
                 <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
                 
                 
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
->>>>>>> Stashed changes
                     <Form.Group>
                      <Form.Control
-                     type="searchTerm"
+                     type="text"
                      name="searchTerm"
-                     placeholder="Search for Product"                     
-                     onChange={handleChange}
-                     required= {true}/>                  
+                     placeholder="Search for Product"
+                     value={this.state.searchTerm}
+                     onChange={this.handleChange}/>                  
 
                     <Button variant="primary" type="submit">
                       Search
                     </Button>
                     </Form.Group>
                 </Form>
+                
+                
                 </nav>
+                
             </div>
+            
         </div>
+        
     )
+    }
 }
-
 
 
 export default HeaderAndNav
