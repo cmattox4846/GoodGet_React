@@ -9,8 +9,10 @@ function HomePage(){
     return(
         <div>
             <Container>
-                <Row>
-                    <h1 className='header'>Welcome to Good Get</h1>
+                <Row>                   
+                    <Col>
+                        <h1 className='header'>Welcome to Good Get</h1>
+                    </Col>                    
                 </Row>        
             </Container>
         </div>

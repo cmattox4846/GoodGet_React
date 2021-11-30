@@ -208,7 +208,7 @@ const addReviews = async (addItem) => {
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
-            <Route path="/TestPage" element={<DetailTable details={details} reviews={getReviews} /> } />
+            <Route path="/ProductDetail" element={<DetailTable details={details} reviews={getReviews} addProductReview={addReviews} /> } />
           </Routes>
         </Router>        
       </div>
