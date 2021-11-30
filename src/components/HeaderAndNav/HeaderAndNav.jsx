@@ -10,7 +10,8 @@ class HeaderAndNav extends Component{
     constructor(props){
         super(props)
         this.state = {
-            searchTerm:''          
+            searchTerm:'' ,
+            logout:''         
             
         }
     }
@@ -26,6 +27,11 @@ class HeaderAndNav extends Component{
         this.props.productSearch(this.state.searchTerm)
     }
 
+    handleLogout = async (event) => {
+                 
+       this.props.logout()
+    }
+
 
 
 
@@ -39,13 +45,15 @@ class HeaderAndNav extends Component{
                 
                 <nav className='topNav'>
                 <Link to="/" >Home</Link>
-                <Link to="/login" >Log in Here</Link>
+                
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
                 <Link to="/userRegistration">User Registration</Link>
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
-                <Link to="/TestPage">Details</Link>
+                <Link to="/login" >Login Here</Link>
+                <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
+                <Link to="/Detail">Details</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
                      <Form.Control
@@ -54,8 +62,6 @@ class HeaderAndNav extends Component{
                      placeholder="Search for Product"
                      value={this.state.searchTerm}
                      onChange={this.handleChange}/>                  
-
-                  
 
                     <Button variant="primary" type="submit">
                       Search

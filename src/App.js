@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate, useLocation} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
 import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav';
 import HomePage from './components/HomePage/HomePage';
@@ -12,18 +12,17 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import ProductDetails from './components/ProductTable/ProductTable';
-import DetailTable from './components/TestPage/TestPage';
-import useForm from './components/LoginScreen/useForm';
+import DetailTable from './components/ProductDetail/ProductDetail';
 
 
 
 function App() {
-  const [productId, setProductId] = useState([])
+  //const [productId, setProductId] = useState([])
   const [productList, setProductList] = useState([])
-  const [userData, setUserData] = useState({})
+  //const [userData, setUserData] = useState({})
   const [user, setUser] = useState({})
-  const [userLogin, setUserLogin] = useState([])
-  const [jwt, setJwt] = useState()
+  //const [userLogin, setUserLogin] = useState([])
+  //const [jwt, setJwt] = useState()
   const [loadData, setLoadData] = useState(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [loadShoppingCart, setLoadShoppingCart] = useState(false)
@@ -32,24 +31,8 @@ function App() {
 
 
 
-  const getUserJWT = () => {
-    const jwt = localStorage.getItem('token');
-    try {
-      const user = jwtDecode(jwt);
-      setUser(user)
-      console.log("get user jwt call", user)
-      console.log(jwt)
-    } catch (error) {
-      console.log("Error in decoding JWT token: ", error)
-    }
-  }
-
-  useEffect(() =>{
-    getUserJWT();
-    getUserLogin();
-    setLoadData(!loadData)   
-  },[])
-
+  
+ 
   useEffect(() =>{
     getProducts()
   },[loadData])
@@ -66,32 +49,35 @@ function App() {
   
   }, [details])
 
+  
+
  //Get user login
- const getUserLogin = async () => {
-  
-   const response = await axios.get('https://localhost:44394/api/examples/user', { headers: {Authorization: 'Bearer ' + jwt}});
-   setUserLogin(response.data);
-   console.log(response.data)
- }
+ 
+ const loginUser = async (loginUser) => {
+  let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
+  localStorage.setItem('token', response.data.token);
+  console.log("response axios call", response.data.token)
+  getUserJWT();
+}
 
-  const getProducts = async () => {
+  const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
-    let response = await axios.get('https://localhost:44394/api/Products', { headers: {Authorization: 'Bearer ' + jwt}})
-    setProductList(response.data)  
+    try {
+      const user = jwtDecode(jwt);
+      setUser(user)
+     // setLoadData(!loadData)
+      console.log("get user jwt call", user)
+      console.log(jwt)
+    } catch (error) {
+      console.log("Error in decoding JWT token: ", error)
+      setUser({})
+    }
+
   }
 
-  
-  
-  const loginUser = async (loginUser) => {
-    let response= await axios.post('https://localhost:44394/api/authentication/login', loginUser);
-    localStorage.setItem('token', response.data.token);
-    console.log("response axios call", response.data.token)
-    setJwt(localStorage.getItem('token'));
-
-  }
-
-  const logoutUser=()=>{
-    
+  const logOut = ()=>{
+    localStorage.removeItem("token");
+    setUser({})
   }
   
   const registerUser = async (objectBeingPassedIn) => {
@@ -108,6 +94,11 @@ function App() {
     await axios.post('https://localhost:44394/api/authentication', newUser)
   }
 
+  const getProducts = async () => {
+    const jwt = localStorage.getItem('token');
+    let response = await axios.get('https://localhost:44394/api/Products', { headers: {Authorization: 'Bearer ' + jwt}})
+    setProductList(response.data)  
+  }
   const sellProduct = async (objectBeingPassedIn) => {
     let decimalPrice = parseInt(objectBeingPassedIn.price)
     let newProduct = {
@@ -160,10 +151,10 @@ function App() {
   
   const seeProductDetails = (viewDetails) =>  {
     console.log("these are the details" + viewDetails)
-    let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id == viewDetails)
+    let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id === viewDetails)
     console.log(deets)
-    setDetails(deets)
-    console.log(details)
+    setDetails(deets[0])
+    // console.log(details)
     
    
   }
@@ -174,21 +165,7 @@ function App() {
     setLoadShoppingCart(!loadShoppingCart)
   }
 
-  // Login Authorization
-
-  //function PrivateOutlet() {
-  //  const auth = useAuth();
-  //  return auth ? <Outlet /> : <Navigate to="/login" />;
-  //}
-  //
-  //function PrivateRoute({ children }) {
-  //  const auth = useAuth();
-  //  return auth ? children : <Navigate to="/login" />;
-  //}
-  //
-  //function useAuth() {
-  //  return true;
-  //}
+ 
   
 
 
@@ -196,17 +173,10 @@ function App() {
     return (
       <div>
         <Router>
-          <HeaderAndNav productSearch={searchForProduct}/>
+          <HeaderAndNav productSearch={searchForProduct} logout={logOut}/>
           <Routes>
-            {/* <Route path="/Profile" render={props =>{
-              if (!user){
-                return <Route path="/Profile" element= {<Navigate replace to="/login" />} />
-              } else {
-                return <ProfilePage {...props} user={user}/>
-              }
-            }} /> */}
-            <Route path="/Profile" element={<ProfilePage user={user}/>}/>            
-            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
+            <Route path="/Profile" element={<ProfilePage user={user}/>}/>
+            <Route path="/login" element={<LoginScreen loginUserCall={loginUser}  />} />        
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} getAllProducts={getProducts} view={seeProductDetails} details={details}/> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
