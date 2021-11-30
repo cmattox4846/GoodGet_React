@@ -197,7 +197,7 @@ const addReviews = async (addItem) => {
 
 
     return (
-      <div>
+      <div className="background">
         <Router>
           <HeaderAndNav productSearch={searchForProduct} logout={logOut}/>
           <Routes>
