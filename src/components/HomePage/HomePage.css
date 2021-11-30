@@ -1,7 +1,11 @@
 .header{
     text-align: center;
-    background-color: rgb(209, 127, 32);
+    background-color: #61dafb(209, 127, 32);
     padding-top: 20vh;
     margin-top: 10vh;
     padding-bottom: 20vh;
+}
+
+.logo {
+    background-image: url(../../Images/logo.jpg)
 }

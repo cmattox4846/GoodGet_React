@@ -31,7 +31,7 @@ const HeaderAndNav = (props) =>{
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
                 <Link to="/login" >Login Here</Link>
-                <Link to="/" onClick={() =>{props.logout() }}>Logout Here</Link>                
+                <Link to="/login" onClick={() =>{props.logout() }}>Logout Here</Link>                
                 <Form onSubmit= {handleSubmit}>
                     <Form.Group>
                      <Form.Control
