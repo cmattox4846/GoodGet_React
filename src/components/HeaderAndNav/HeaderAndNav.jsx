@@ -23,7 +23,7 @@ class HeaderAndNav extends Component{
 
     handleSubmit = async (event) => {
         event.preventDefault();             
-        this.props.loginUserCall(this.state)
+        this.props.productSearch(this.state.searchTerm)
     }
 
 
@@ -49,7 +49,7 @@ class HeaderAndNav extends Component{
                     <Form.Group>
                      <Form.Control
                      type="text"
-                     name="SearchBar"
+                     name="searchTerm"
                      placeholder="Search for Product"
                      value={this.state.searchTerm}
                      onChange={this.handleChange}/>                  

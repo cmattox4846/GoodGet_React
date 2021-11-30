@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate, useLocation} from 'react-router-dom';
 import './App.css';
 import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav';
 import HomePage from './components/HomePage/HomePage';
@@ -51,10 +51,14 @@ function App() {
     getShoppingCart()
   },[loadShoppingCart])
 
+  useEffect(() =>{
+    //forceRerender
+  },[productList])
+
  //Get user login
  const getUserLogin = async () => {
   
-   const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
+   const response = await axios.get('https://localhost:44394/api/examples/user', { headers: {Authorization: 'Bearer ' + jwt}});
    setUserLogin(response.data);
    console.log(response.data)
  }
@@ -110,8 +114,10 @@ function App() {
 
   const searchForProduct = async (productName) => {
     const jwt = localStorage.getItem('token')
-    let response = await axios.get('https://localhost:44394/api/Products', {headers:{Authorization:'Bearer ' + jwt}})
-    setShoppingCart(response.data)
+    let response = await axios.get('https://localhost:44394/api/Products/' + (productName) + '/' , {headers:{Authorization:'Bearer ' + jwt}})
+    console.log(response.data)
+    setProductList(response.data)
+    
   }
   
   const getShoppingCart = async () => {
@@ -143,10 +149,29 @@ function App() {
     setLoadShoppingCart(!loadShoppingCart)
   }
 
+  // Login Authorization
+
+  //function PrivateOutlet() {
+  //  const auth = useAuth();
+  //  return auth ? <Outlet /> : <Navigate to="/login" />;
+  //}
+  //
+  //function PrivateRoute({ children }) {
+  //  const auth = useAuth();
+  //  return auth ? children : <Navigate to="/login" />;
+  //}
+  //
+  //function useAuth() {
+  //  return true;
+  //}
+  
+
+
+
     return (
       <div>
         <Router>
-          <HeaderAndNav />
+          <HeaderAndNav productSearch={searchForProduct}/>
           <Routes>
             {/* <Route path="/Profile" render={props =>{
               if (!user){
@@ -155,10 +180,10 @@ function App() {
                 return <ProfilePage {...props} user={user}/>
               }
             }} /> */}
-            <Route path="/Profile" element={<ProfilePage user={user}/>}/>
+            <Route path="/Profile" element={<ProfilePage user={user}/>}/>            
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} /> }  />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} getAllProducts={getProducts}/> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />

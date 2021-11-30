@@ -27,6 +27,7 @@ const ProductTable = (props) => {
           })}
         </tbody>
       </Table>
+      <button onClick={() => props.getAllProducts()}> View All Products </button>
     </div>
   );
 };
