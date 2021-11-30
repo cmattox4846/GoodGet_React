@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 
 
 
+
+const ProductTable = (props) => {
+  
   
   return (
     <div>

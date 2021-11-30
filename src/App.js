@@ -27,6 +27,8 @@ function App() {
   const [shoppingCart, setShoppingCart] = useState([])
   const [loadShoppingCart, setLoadShoppingCart] = useState(false)
   const [details, setDetails] = useState([])
+  const [reviews, setReviews] = useState([])
+  
   // const [detailsLoad, setDetailsLoad] = useState("")
 
 
@@ -165,8 +167,30 @@ function App() {
     setLoadShoppingCart(!loadShoppingCart)
   }
 
- 
-  
+ // Reviews Section
+
+ const getReviews = async () => {
+  try {
+    const jwt = localStorage.getItem('token');
+    let response = await axios.get('https://localhost:44394/api/review', {headers:{Authorization:'Bearer ' + jwt}})
+    console.log(response.data)
+    setReviews(response.data)
+  }
+  catch (err){
+    console.log("Errors loading reviews", err)
+  }
+}
+
+const addReviews = async (addItem) => {
+  console.log(addItem)
+  let newReview = {
+    Review: addItem.review,
+    Rating: addItem.rating,
+    ReviewId: addItem.id}
+  const jwt = localStorage.getItem('token')
+  let response = await axios.post('https://localhost:44394/api/review', newReview, {headers:{Authorization:'Bearer ' + jwt}})
+  getReviews()
+  }  
 
 
 
@@ -182,7 +206,7 @@ function App() {
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
-            <Route path="/TestPage" element={<DetailTable details={details} /> } />
+            <Route path="/TestPage" element={<DetailTable details={details} reviews={getReviews} /> } />
           </Routes>
         </Router>
       </div>
