@@ -15,8 +15,7 @@ const LoginScreen = (props) => {
         console.log("from login" + formValues)                  
         props.loginUserCall(formValues)
         navigate("../Profile")
-    }
-   
+    }  
 
 
     return ( 
