@@ -7,6 +7,10 @@ import StarRating from 'react-bootstrap-star-rating';
 
 
 
+
+
+
+
 const DetailTable = (props) => {
 
   const {formValues, handleChange, handleSubmit } = useForm(addReview);
@@ -19,6 +23,15 @@ const DetailTable = (props) => {
           console.error(error.message)
       }
       
+          <Table>
+            <tbody>
+            <tr><td>{props.details.name}</td></tr>
+            <tr><td>{props.details.description}</td></tr>
+            <tr><td>{props.details.price}</td></tr>
+            <tr><td>{props.reviews.rating}</td></tr>
+            <tr><td>{props.reviews.review}</td></tr>
+            </tbody>    
+          </Table>
       
   }
   
