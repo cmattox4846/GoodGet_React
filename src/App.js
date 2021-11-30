@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
 import HeaderAndNav from './components/HeaderAndNav/HeaderAndNav';
 import HomePage from './components/HomePage/HomePage';
@@ -11,6 +11,8 @@ import UserRegistration from './components/UserRegistration/UserRegistration';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import ProductDetails from './components/ProductTable/ProductTable';
+import DetailTable from './components/TestPage/TestPage';
 
 
 
@@ -24,6 +26,10 @@ function App() {
   const [loadData, setLoadData] = useState(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [loadShoppingCart, setLoadShoppingCart] = useState(false)
+  const [details, setDetails] = useState([])
+  // const [detailsLoad, setDetailsLoad] = useState("")
+
+
 
   const getUserJWT = () => {
     const jwt = localStorage.getItem('token');
@@ -51,10 +57,18 @@ function App() {
     getShoppingCart()
   },[loadShoppingCart])
 
+  useEffect(() =>{
+    //forceRerender
+  },[productList])
+
+  useEffect(() =>{
+  
+  }, [details])
+
  //Get user login
  const getUserLogin = async () => {
   
-   const response = await axios.get('https://localhost:44394/api/authentication/user', { headers: {Authorization: 'Bearer ' + jwt}});
+   const response = await axios.get('https://localhost:44394/api/examples/user', { headers: {Authorization: 'Bearer ' + jwt}});
    setUserLogin(response.data);
    console.log(response.data)
  }
@@ -114,8 +128,10 @@ function App() {
 
   const searchForProduct = async (productName) => {
     const jwt = localStorage.getItem('token')
-    let response = await axios.get('https://localhost:44394/api/Products', {headers:{Authorization:'Bearer ' + jwt}})
-    setShoppingCart(response.data)
+    let response = await axios.get('https://localhost:44394/api/Products/' + (productName) + '/' , {headers:{Authorization:'Bearer ' + jwt}})
+    console.log(response.data)
+    setProductList(response.data)
+    
   }
   
   const getShoppingCart = async () => {
@@ -140,6 +156,16 @@ function App() {
     let response = await axios.post('https://localhost:44394/api/ShoppingCart', newProduct, {headers:{Authorization:'Bearer ' + jwt}})
     setLoadShoppingCart(!loadShoppingCart)
   }
+  
+  const seeProductDetails = (viewDetails) =>  {
+    console.log("these are the details" + viewDetails)
+    let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id === viewDetails)
+    console.log(deets)
+    setDetails(deets)
+    console.log(details)
+    
+   
+  }
 
   const deleteShoppingCart = async (item) => {
     const jwt = localStorage.getItem('token');
@@ -147,10 +173,29 @@ function App() {
     setLoadShoppingCart(!loadShoppingCart)
   }
 
+  // Login Authorization
+
+  //function PrivateOutlet() {
+  //  const auth = useAuth();
+  //  return auth ? <Outlet /> : <Navigate to="/login" />;
+  //}
+  //
+  //function PrivateRoute({ children }) {
+  //  const auth = useAuth();
+  //  return auth ? children : <Navigate to="/login" />;
+  //}
+  //
+  //function useAuth() {
+  //  return true;
+  //}
+  
+
+
+
     return (
       <div>
         <Router>
-          <HeaderAndNav />
+          <HeaderAndNav productSearch={searchForProduct}/>
           <Routes>
             {/* <Route path="/Profile" render={props =>{
               if (!user){
@@ -162,10 +207,11 @@ function App() {
             <Route path="/Profile" element={<ProfilePage user={user}/>}/>
             <Route path="/login" element={<LoginScreen loginUserCall={loginUser}  logoutUser={logoutUser}/>} />        
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} /> }  />            
+            <Route path="/products" element={<ProductTable listOfProducts={productList} add={addToShoppingCart} getAllProducts={getProducts} view={seeProductDetails} details={details}/> }  />            
             <Route path="/sellProducts" element={<SellProductTable sellProduct={sellProduct}/>} />
             <Route path="/userRegistration" element={<UserRegistration registerUser={registerUser} />} />
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
+            <Route path="/TestPage" element={<DetailTable details={details} /> } />
           </Routes>
         </Router>
       </div>

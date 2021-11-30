@@ -23,7 +23,7 @@ class HeaderAndNav extends Component{
 
     handleSubmit = async (event) => {
         event.preventDefault();             
-        this.props.loginUserCall(this.state)
+        this.props.productSearch(this.state.searchTerm)
     }
 
     handleLogout = async (event) => {
@@ -51,12 +51,13 @@ class HeaderAndNav extends Component{
                 <Link to="/Profile">Profile</Link>
                 <Link to="/ShoppingCart">Shopping Cart</Link>
                 <Link to="/login" >Login Here</Link>
-                <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
+                {/* <Link to="/login" onClick={localStorage.removeItem('token')}>Logout Here</Link> */}
+                <Link to="/Detail">Details</Link>
                 <Form onSubmit= {this.handleSubmit} method= 'post'>
                     <Form.Group>
                      <Form.Control
                      type="text"
-                     name="SearchBar"
+                     name="searchTerm"
                      placeholder="Search for Product"
                      value={this.state.searchTerm}
                      onChange={this.handleChange}/>                  
