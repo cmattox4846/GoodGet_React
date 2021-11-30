@@ -208,7 +208,7 @@ const addReviews = async (addItem) => {
             <Route path="/ShoppingCart" element={<ShoppingCart list={shoppingCart} delete={deleteShoppingCart} />} />
             <Route path="/TestPage" element={<DetailTable details={details} reviews={getReviews} /> } />
           </Routes>
-        </Router>
+        </Router>        
       </div>
   );
 }

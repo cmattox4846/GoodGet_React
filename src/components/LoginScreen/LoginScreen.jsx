@@ -1,54 +1,47 @@
-import React, { Component} from "react";
+import React from "react";
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router";
+import useForm from './useForm';
 
 
 
-class LoginScreen extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            userName:'',            
-            password:''
-        }
-    }
+const LoginScreen = (props) => {
+    const {formValues, handleChange, handleSubmit } = useForm(register);
     
-
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+    function register() {
+        props.loginUserCall()
+        alert('Thanks for Registering!')
+        
     }
 
-    handleSubmit = async (event) => {
-        event.preventDefault();             
-        this.props.loginUserCall(this.state)
-    }
 
-    render(){
-        return ( 
-            <div>
-                <Form onSubmit= {this.handleSubmit} method= 'post'>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>User Name</Form.Label>
-                      <Form.Control type="text" name="userName" placeholder="Enter UserName"  onChange= {this.handleChange} />
+    return ( 
+        <div>
+            <Form onSubmit= {handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>User Name</Form.Label>
+                  <Form.Control type="username" name="username" placeholder="Enter UserName" onChange= {handleChange} value= {formValues.username} required= {true}/>
 
-                    </Form.Group>
+                </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" name="password" placeholder="Password" onChange= {this.handleChange}/>
-                    </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" name="password" placeholder="Password" onChange= {handleChange} value= {formValues.password} required= {true}/>
+                </Form.Group>
 
-                    <Button variant="primary"  type="submit">
-                      Submit
-                    </Button>
-                </Form>
-            </div>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+            </Form>
+        </div>
 
-        );
-    }
+    );
 }
+
  
 export default LoginScreen;
+
+
+
+
