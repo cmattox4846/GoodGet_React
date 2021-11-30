@@ -12,7 +12,7 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import jwtDecode from 'jwt-decode'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import ProductDetails from './components/ProductTable/ProductTable';
-import DetailTable from './components/TestPage/TestPage';
+import DetailTable from './components/ProductDetail/ProductDetail';
 
 
 
@@ -153,8 +153,8 @@ function App() {
     console.log("these are the details" + viewDetails)
     let deets = productList.filter((detailsOfProducts) => detailsOfProducts.id === viewDetails)
     console.log(deets)
-    setDetails(deets)
-    console.log(details)
+    setDetails(deets[0])
+    // console.log(details)
     
    
   }
