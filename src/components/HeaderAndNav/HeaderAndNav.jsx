@@ -20,6 +20,7 @@ const HeaderAndNav = (props) =>{
 
     
     return(
+<<<<<<< Updated upstream
         <div>            
             <h3>Welcome to Good Get</h3>
             <div>                
@@ -27,12 +28,34 @@ const HeaderAndNav = (props) =>{
                 <Link to="/" >Home</Link>                
                 <Link to="/products">Products</Link>
                 <Link to="/sellProducts" >Sell Products</Link>
+=======
+        <div>
+            
+            <h2></h2>
+            <div>
+                
+                <nav className='topNav'>
+                <Link to="/" >Home</Link>
+>>>>>>> Stashed changes
                 <Link to="/userRegistration">User Registration</Link>
+                
+                <Link to="/login" >Login Here</Link>
                 <Link to="/Profile">Profile</Link>
+                <Link to="/products">Products</Link>
+                
+                
                 <Link to="/ShoppingCart">Shopping Cart</Link>
+<<<<<<< Updated upstream
                 <Link to="/login" >Login Here</Link>
                 <Link to="/" onClick={() =>{props.logout() }}>Logout Here</Link>                
                 <Form onSubmit= {handleSubmit}>
+=======
+                <Link to="/sellProducts" >Sell Products</Link>
+                <Link to="/login" onClick={this.handleLogout}>Logout Here</Link>
+                
+                
+                <Form onSubmit= {this.handleSubmit} method= 'post'>
+>>>>>>> Stashed changes
                     <Form.Group>
                      <Form.Control
                      type="searchTerm"
